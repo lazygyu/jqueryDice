@@ -48,8 +48,8 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 			position:"relative",
 			left:0,
 			top:0,
-			marginLeft:((that.width - diceSize)/2) + "px",
-			marginTop:((that.height - diceSize)/2) + "px" ,
+			marginLeft:((that.width - setting.diceSize)/2) + "px",
+			marginTop:((that.height - setting.diceSize)/2) + "px" ,
 			overflow:"hidden"
 		});
 
@@ -64,6 +64,25 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 		});
 	};
 
+	Dice.prototype.option = function(opt){
+		var that = this;
+		that.setting = $.extend(that.setting, opt);
+		that.value = that.setting.value;
+		that.diceSize = that.setting.diceSize;
+		that.duration = that.setting.duration;
+
+		$(that.imgCont).css({
+			marginTop: -((that.value-1) * that.setting.diceSize) + "px"
+		});
+
+		that.diceImage.css({
+			width:that.setting.diceSize + "px",
+			height:that.setting.diceSize + "px",
+			marginLeft:((that.width - that.setting.diceSize) / 2) + "px",
+			marginTop:((that.height - that.setting.diceSize) / 2) + "px"
+		});
+	}
+
 	Dice.prototype.roll = function(v, during, cb){
 		var that = this;
 		if( that.inRoll ) return false;
@@ -77,10 +96,10 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 
 		$(that.diceImage).css({
 			marginTop:-(that.diceSize*2),
-			marginLeft:0
+			marginLeft:-(that.diceSize*2)
 		}).animate({
-			marginTop:((that.width - that.diceSize) / 2) + "px",
-			marginLeft:((that.width - that.diceSize) / 2) + "px",
+			marginTop:((that.height - that.setting.diceSize) / 2) + "px",
+			marginLeft:((that.width - that.setting.diceSize) / 2) + "px",
 		}, {duration:that.setting.duration, specialEasing:{marginTop:'easeOutBounce'}, step:function(num, tween){
 			var rnd = Math.floor(Math.random() * 6) + 1;
 			that.showValue(rnd);
@@ -96,7 +115,10 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 		if( typeof elems == "string"){
 			switch(elems){
 				case "roll":
-
+					$(this).data("lz_dice").roll(opt);
+					break;
+				case "option":
+					$(this).data("lz_dice").option(opt);
 					break;
 			}
 		}else{
