@@ -58,7 +58,8 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 
 	Dice.prototype.showValue = function(v){
 		var that = this;
-		var tmpTop = -((v -1) * that.diceSize);
+		var size = that.diceImage.width()
+		var tmpTop = -((v -1) * size);
 		$(this.imgCont).css({
 			marginTop:tmpTop + "px"
 		});
@@ -96,8 +97,13 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 
 		$(that.diceImage).css({
 			marginTop:-(that.diceSize*2),
-			marginLeft:-(that.diceSize*2)
+			marginLeft:-(that.diceSize*2),
+			width:(that.diceSize*4) + "px",
+			height:(that.diceSize*4) + "px"
+
 		}).animate({
+			width:that.diceSize + "px",
+			height:that.diceSize + "px",
 			marginTop:((that.height - that.setting.diceSize) / 2) + "px",
 			marginLeft:((that.width - that.setting.diceSize) / 2) + "px",
 		}, {duration:that.setting.duration, specialEasing:{marginTop:'easeOutBounce'}, step:function(num, tween){

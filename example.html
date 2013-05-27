@@ -7,10 +7,30 @@
 		<script type="text/javascript">
 			$(function(){
 				$("#dice").dice();
+				$("#dice, #btn_randRoll").click(function(){
+					$("#dice").dice("roll");
+				});
+				$("#btn_roll").click(function(){
+					$("#dice").dice("roll", $("#rollValue").val());
+				});
+
+				$("#btn_setSize").click(function(){
+					$("#dice").dice("option", {diceSize:$("#dsize").val()});
+				});
 			});
 		</script>
 	</head>
 	<body>
+		<h1>Click below!</h1>
 		<div id="dice" style="width:300px; height:400px; border:solid 1px black; background:#69c;"></div>
+		
+		<br />
+		<button type="button" id="btn_roll">Roll the dice to </button>
+		<input type="text" id="rollValue" value = "5" />
+		or
+		<button type="button" id="btn_randRoll">Random!</button>
+
+		<br />
+		<button type="button" id="btn_setSize">Set the dice's size</button> to <input type="text" id="dsize" value="50" /> pixels!
 	</body>
 </html>
