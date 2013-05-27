@@ -7,7 +7,7 @@ A simple dice plugin with a simple rolling animation
 [jQuery](http://jquery.com)
 
 ##Usage
-```javascript
+```html
   <div id='dice'></dice>
   <script>
     $(function(){
