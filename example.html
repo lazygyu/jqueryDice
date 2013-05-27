@@ -8,14 +8,18 @@
 			$(function(){
 				$("#dice").dice();
 				$("#dice, #btn_randRoll").click(function(){
-					$("#dice").dice("roll");
+					$("#dice").dice("roll", alert);
 				});
 				$("#btn_roll").click(function(){
-					$("#dice").dice("roll", $("#rollValue").val());
+					$("#dice").dice("roll", $("#rollValue").val(), alert);
 				});
 
 				$("#btn_setSize").click(function(){
 					$("#dice").dice("option", {diceSize:$("#dsize").val()});
+				});
+
+				$("#btn_setDuration").click(function(){
+					$("#dice").dice("option", {duration: parseInt($("#dur").val())});
 				});
 			});
 		</script>
@@ -32,5 +36,7 @@
 
 		<br />
 		<button type="button" id="btn_setSize">Set the dice's size</button> to <input type="text" id="dsize" value="50" /> pixels!
+		<br />
+		<button type="button" id="btn_setDuration">Set the duration of dice rolling animation</button> to <input type="text" id="dur" value="500" /> milliseconds!
 	</body>
 </html>

@@ -20,6 +20,7 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 		this.height = $(tar).height();
 		this.inRoll = false;
 		this.setting = setting;
+		this.rollFrame = 0;
 
 		this.value = 3;
 
@@ -60,6 +61,7 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 		var that = this;
 		var size = that.diceImage.width()
 		var tmpTop = -((v -1) * size);
+		that.tmpValue = v;
 		$(this.imgCont).css({
 			marginTop:tmpTop + "px"
 		});
@@ -84,20 +86,23 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 		});
 	}
 
-	Dice.prototype.roll = function(v, during, cb){
+	Dice.prototype.roll = function(v, cb){
 		var that = this;
 		if( that.inRoll ) return false;
+		if( cb == undefined && typeof v == "function" ) { cb = v; v = null; }
 		if(v){
 			that.targetValue = v;
 		}else{
 			that.targetValue = Math.floor((Math.random() * 6)) + 1;
 		}
 
+
+
 		that.inRoll = true;
 
 		$(that.diceImage).css({
-			marginTop:-(that.diceSize*2),
-			marginLeft:-(that.diceSize*2),
+			marginTop:-(that.diceSize*4),
+			marginLeft:-(that.diceSize*4),
 			width:(that.diceSize*4) + "px",
 			height:(that.diceSize*4) + "px"
 
@@ -107,21 +112,25 @@ jQuery.easing.jswing=jQuery.easing.swing;jQuery.extend(jQuery.easing,{def:"easeO
 			marginTop:((that.height - that.setting.diceSize) / 2) + "px",
 			marginLeft:((that.width - that.setting.diceSize) / 2) + "px",
 		}, {duration:that.setting.duration, specialEasing:{marginTop:'easeOutBounce'}, step:function(num, tween){
-			var rnd = Math.floor(Math.random() * 6) + 1;
-			that.showValue(rnd);
+			if( that.rollFrame++ % 9 != 0 ) {
+				that.showValue(that.tmpValue);
+			}else{
+				var rnd = Math.floor(Math.random() * 6) + 1;
+				that.showValue(rnd);
+			}
 		}, complete:function(){
 			that.inRoll = false;
+			that.value = that.targetValue;
 			that.showValue(that.targetValue);
+			if(cb && typeof cb === "function") cb(that.targetValue);
 		}});
-
-
 	}
 	
-	$.fn.dice = function(elems, opt){
+	$.fn.dice = function(elems, opt, cb){
 		if( typeof elems == "string"){
 			switch(elems){
 				case "roll":
-					$(this).data("lz_dice").roll(opt);
+					$(this).data("lz_dice").roll(opt, cb);
 					break;
 				case "option":
 					$(this).data("lz_dice").option(opt);
