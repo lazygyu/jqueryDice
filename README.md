@@ -18,7 +18,7 @@ A simple dice plugin with a simple rolling animation
   </script>
 
 ##Options
-
+```javascript
   $(element).dice({
     diceSize : Size of dice in pixel (default 20),
     duration : Dice rolling duration in milliseconds (default 500)
@@ -32,7 +32,7 @@ A simple dice plugin with a simple rolling animation
   $(element).dice("option", opt);
   
   // opt : An option object (like above)
-  
+```
 ##Demo
 
 [Click](http://dev.lazygyu.net/test/dice/jqueryDice/example.html)
