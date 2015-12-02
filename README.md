@@ -35,6 +35,6 @@ A simple dice plugin with a simple rolling animation
 ```
 ##Demo
 
-[Click](http://dev.lazygyu.net/test/dice/jqueryDice/example.html)
+[Click](http://web.lazygyu.net/test/jqueryDice/example.html)
   
   
